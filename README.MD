@@ -1,4 +1,4 @@
-# Truc et astuce pour DRUPAL 7
+# Trucs et astuces pour DRUPAL 7
 
 *Override du template souvent utilisé (fichier template-override-utile.php)*
 Plusieurs override ici 
