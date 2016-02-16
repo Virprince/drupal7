@@ -91,10 +91,9 @@ function templateName_preprocess_html(&$variables) {
     }
 }
 
-// --------------------------------------------------------------------------------------
-
+// ------------------------------------------------------------//
 // */ Les fichiers joint par champ fichier s'ouvrent en target="_blank"
-
+// ------------------------------------------------------------//
 function templateName_file_link($variables) {
   $file = $variables['file'];
   $icon_directory = $variables['icon_directory'];
@@ -155,7 +154,7 @@ function templateName_menu_link(array $variables) {
 
 // ------------------------------------------------------------//
 //  */ OVERRIDE SEARCH --->                                    //
-//  Changer différent truc sur Search                          //
+//  Changer différents trucs sur Search                          //
 // ------------------------------------------------------------//
 
 function templateName_form_search_block_form_alter(&$form, &$form_state, $form_id) {
