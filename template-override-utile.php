@@ -17,7 +17,7 @@ function block_render($module, $block_id) {
 }
     /**** DANS LE TPL.PHP -->
       
-      <?php block_render(‘nommodule', 'idDuBloc') ?>
+      <?php block_render('nommodule', 'idDuBloc') ?>
 
     *******/
 
@@ -41,18 +41,18 @@ function templateName_preprocess_page(&$vars, $hook) {
   //*******************************
     
     if (isset($vars['node'])) :
-        if($vars['node']->type == 'page_index' or 'page_realisation' or 'page_prestation' or 'article' or 'page'):
+        if($vars['node']->type == 'node' or 'nodetype' or 'foo'):
             $node = node_load($vars['node']->nid);
-            $output = field_view_field('node', $node, 'field_img_head', array('label' => 'hidden'));
-            $vars['field_img_head'] = $output;
+            $output = field_view_field('node', $node, 'field_name_of_field', array('label' => 'hidden'));
+            $vars['field_name_of_field'] = $output;
         endif;
     endif;
 
     /**** DANS LE TPL.PHP -->
 
-                <?php if ($content['field_img_head'] = render($content['field_img_head'])):
-                     print render($field_img_head);
-                endif;?>  
+                <?php if ($field_name_of_field):
+                    print render($field_name_of_field);
+                endif;?>
 
     *****/
 
@@ -127,3 +127,52 @@ function templateName_file_link($variables) {
   return '<span class="file">' . $icon . ' ' . l($link_text, $url, $options) . '</span>';
 
 } 
+
+// ------------------------------------------------------------//
+//  */ OVERRIDE MENU --->                                      //
+//  Changer la class de ul  + ul enfant                        //
+// ------------------------------------------------------------//
+
+function templateName_menu_tree__main_menu($variables) {
+  return '<ul class="navbar-nav list-unstyled clearfix">' . $variables['tree'] . '</ul>';
+}
+
+/**
+ * Implements theme_menu_link().
+ */
+function templateName_menu_link(array $variables) {
+  $element = $variables['element'];
+  $sub_menu = '';
+
+  if ($element['#below']) {
+    // Wrap in dropdown-menu.
+    unset($element['#below']['#theme_wrappers']);
+    $sub_menu = '<ul class="sous-nav">' . drupal_render($element['#below']) . '</ul>';
+  }
+  $output = l($element['#title'], $element['#href'], $element['#localized_options']);
+  return '<li' . drupal_attributes($element['#attributes']) . '>' . $output . $sub_menu . "</li>\n";
+}
+
+// ------------------------------------------------------------//
+//  */ OVERRIDE SEARCH --->                                    //
+//  Changer différent truc sur Search                          //
+// ------------------------------------------------------------//
+
+function templateName_form_search_block_form_alter(&$form, &$form_state, $form_id) {
+    //$form['search_block_form']['#title'] = t('Rechercher'); // Change the text on the label element
+    //$form['search_block_form']['#title_display'] = 'invisible'; // Toggle label visibilty
+    $form['search_block_form']['#size'] = 20;  // define size of the textfield
+    //$form['search_block_form']['#default_value'] = t('Search'); // Set a default value for the textfield
+    $form['actions']['submit']['#value'] = t('GO!'); // Change the text on the submit button
+    //$form['actions']['submit'] = array('#type' => 'image_button', '#src' => base_path() . path_to_theme() . '/images/search-button.png');
+
+    // Add extra attributes to the text box
+    //$form['search_block_form']['#attributes']['onblur'] = "if (this.value == '') {this.value = 'Search';}";
+    //$form['search_block_form']['#attributes']['onfocus'] = "if (this.value == 'Search') {this.value = '';}";
+    // Prevent user from searching the default text
+    //$form['#attributes']['onsubmit'] = "if(this.search_block_form.value=='Search'){ alert('Please enter a search'); return false; }";
+
+    // Alternative (HTML5) placeholder attribute instead of using the javascript
+    $form['search_block_form']['#attributes']['placeholder'] = t('Rechercher');
+} 
+?>
