@@ -23,7 +23,8 @@ Cet Override ajoute une classe au body de la page en fonction des termes de taxo
 ### Ajouter une class au ul d'un menu
 
 La première partie permet d'ajouter une class à tout les ul d'un menu drupal. 
-La seconde partie permet de différencier le premier niveau ex:	<ul class="menu"> des enfants ex: 	<ul class="sous-menu">
+La seconde partie permet de différencier le premier niveau ex: `<ul class="menu"> </ul>` 
+des enfants ex: `<ul class="sous-menu"> </ul>` 
 
 ### Modifier les caractéristiques du Search-block-form
 
